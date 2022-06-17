@@ -2,27 +2,49 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            
-            
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
             steps {
-                echo "Build Stage"
-                sh 'python sources/calc.py'
+                sh 'python -m py_compile sources/Calorias.py sources/calc.py'
+                stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
         stage('Test') {
-           
-            steps {
-                sh 'python sources/test.calorias.py'
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
             }
-           
-            
+            steps {
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test.calorias.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
         }
         stage('Deliver') {
-            
-            steps {           
-                    sh 'python sources/Calory_cal.py'
+            agent any
+            environment {
+                VOLUME = '$(pwd)/sources:/src'
+                IMAGE = 'cdrx/pyinstaller-windows:python2'
             }
-           
+            steps {
+                dir(path: env.BUILD_ID) {
+                    unstash(name: 'compiled-results')
+                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F Calory_cal.py'"
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts "${env.BUILD_ID}/sources/dist/Calory_cal"
+                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+                }
+            }
         }
     }
 }
