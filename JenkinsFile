@@ -19,7 +19,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test.calorias.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calorias.py'
             }
             post {
                 always {
