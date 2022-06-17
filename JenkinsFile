@@ -5,13 +5,13 @@ pipeline {
             echo "Build Stage"
             }
             steps {
-                sh 'python C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\source\calc.py'
+                sh 'python C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\sources\calc.py'
             }
         }
         stage('Test') {
            
             steps {
-                sh 'C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\source\test.calorias.py'
+                sh 'python C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\sources\test.calorias.py'
             }
             post {
                 always {
@@ -22,7 +22,7 @@ pipeline {
         stage('Deliver') {
             
             steps {           
-                    sh 'C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\source\Calory_cal.py'
+                    sh 'python C:\Users\aleja\Desktop\Asignaturas\INGENIERIA SOFT AVANZADA\PracticaFinalJenkins\Nutrition-Cal\sources\Calory_cal.py'
             }
             post {
                 echo "Deliver stage"
