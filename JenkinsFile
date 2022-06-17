@@ -41,7 +41,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts "${env.BUILD_ID}/sources/dist/Calory_Cal"
+                    archiveArtifacts "${env.BUILD_ID}/sources/Calory_Cal"
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 }
             }
