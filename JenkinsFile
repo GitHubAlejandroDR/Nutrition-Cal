@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             echo "Build Stage"
-            }
+            
             steps {
                 sh 'python sources/calc.py'
             }
@@ -13,11 +13,8 @@ pipeline {
             steps {
                 sh 'python sources/test.calorias.py'
             }
-            post {
-                always {
-                    
-                }
-            }
+           
+            
         }
         stage('Deliver') {
             
