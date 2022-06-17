@@ -2,9 +2,10 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            echo "Build Stage"
+            
             
             steps {
+                echo "Build Stage"
                 sh 'python sources/calc.py'
             }
         }
@@ -21,9 +22,7 @@ pipeline {
             steps {           
                     sh 'python sources/Calory_cal.py'
             }
-            post {
-                echo "Deliver stage"
-            }
+           
         }
     }
 }
